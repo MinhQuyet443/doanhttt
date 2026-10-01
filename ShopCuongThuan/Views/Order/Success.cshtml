@@ -1,0 +1,19 @@
+﻿@model ShopCuongThuan.Models.DonHang
+
+<div class="success-box">
+    <h2>Đặt hàng thành công!</h2>
+
+    <p>Cảm ơn bạn đã mua hàng tại  F4Shop.</p>
+
+    <div class="order-code">
+        Mã tra cứu đơn hàng:
+        <strong>@Model.MaTraCuu</strong>
+    </div>
+
+    <p>
+        Bạn có thể dùng mã này cùng số điện thoại để tra cứu trạng thái đơn hàng.
+    </p>
+
+    <a href="/Order/MyOrders" class="checkout-btn">Xem đơn hàng của tôi</a>
+    <a href="/" class="back-btn">Về trang chủ</a>
+</div>

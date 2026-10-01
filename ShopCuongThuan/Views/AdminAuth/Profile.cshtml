@@ -1,0 +1,157 @@
+﻿@model ShopCuongThuan.Models.NhanVien
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="account-page">
+
+    <div class="account-card">
+
+        <div class="account-header">
+
+            <div class="account-title">
+                <span class="account-title-icon">👤</span>
+
+                <div>
+                    <h2>Quản lý tài khoản</h2>
+
+                    <p>
+                        Xem và quản lý thông tin cá nhân của bạn
+                    </p>
+                </div>
+            </div>
+
+            <div class="account-avatar">
+                @if (!string.IsNullOrWhiteSpace(Model.TenNV))
+                {
+                    @Model.TenNV.Substring(0, 1).ToUpper()
+                }
+                else
+                {
+                    @("U")
+                }
+            </div>
+
+        </div>
+
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="account-alert-success">
+                ✓ @TempData["Success"]
+            </div>
+        }
+
+
+        <div class="account-role-box">
+
+            <span>Vai trò tài khoản</span>
+
+            <strong>
+                @(Model.PhanQuyen?.TenQuyen ?? "Chưa xác định")
+            </strong>
+
+        </div>
+
+
+        <div class="account-info-grid">
+
+            <div class="account-info-item">
+
+                <div class="account-info-icon">
+                    👤
+                </div>
+
+                <div>
+                    <span>Họ và tên</span>
+                    <strong>@Model.TenNV</strong>
+                </div>
+
+            </div>
+
+
+            <div class="account-info-item">
+
+                <div class="account-info-icon">
+                    ✉
+                </div>
+
+                <div>
+                    <span>Email</span>
+
+                    <strong>
+                        @(string.IsNullOrWhiteSpace(Model.Email)
+                                                ? "Chưa cập nhật"
+                                                : Model.Email)
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="account-info-item">
+
+                <div class="account-info-icon">
+                    ☎
+                </div>
+
+                <div>
+                    <span>Số điện thoại</span>
+
+                    <strong>
+                        @(string.IsNullOrWhiteSpace(Model.SoDienThoai)
+                                                ? "Chưa cập nhật"
+                                                : Model.SoDienThoai)
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="account-info-item">
+
+                <div class="account-info-icon">
+                    🔑
+                </div>
+
+                <div>
+                    <span>Tên đăng nhập</span>
+                    <strong>@Model.Username</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="account-actions">
+
+            <a href="/AdminAuth/UpdateProfile"
+               class="account-btn account-btn-primary">
+
+                ✏ Cập nhật thông tin
+
+            </a>
+
+
+            <a href="/AdminAuth/ChangePassword"
+               class="account-btn account-btn-dark">
+
+                🔒 Đổi mật khẩu
+
+            </a>
+
+
+            <a href="/AdminAuth/Logout"
+               class="account-btn account-btn-logout">
+
+                ↪ Đăng xuất
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

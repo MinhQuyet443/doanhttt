@@ -1,0 +1,87 @@
+﻿@model List<ShopCuongThuan.Models.GioHangItemViewModel>
+
+<div class="checkout-wrapper">
+    <h2>Thanh toán đơn hàng</h2>
+
+    <div class="checkout-grid">
+        <div class="checkout-form">
+            <h3>Thông tin nhận hàng</h3>
+
+            <form method="post" action="/Order/PlaceOrder" id="checkoutForm">
+                <label>Họ tên người nhận</label>
+                <input type="text" name="hoTenNhan" placeholder="Nhập họ tên người nhận" required />
+
+                <label>Số điện thoại</label>
+                <input type="text" name="soDienThoai" placeholder="Nhập số điện thoại nhận hàng" required />
+
+                <label>Địa chỉ nhận hàng</label>
+                <input type="text" name="diaChi" placeholder="Nhập lại địa chỉ giao hàng" required />
+
+                <label>Phương thức thanh toán</label>
+                <select name="phuongThucThanhToan" id="phuongThucThanhToan" required>
+                    <option value="">-- Chọn phương thức thanh toán --</option>
+                    <option value="COD">Thanh toán khi nhận hàng</option>
+                    <option value="ChuyenKhoan">Chuyển khoản ngân hàng</option>
+                </select>
+
+                <div class="qr-payment-box" id="qrPaymentBox">
+                    <h3>Quét mã QR để thanh toán</h3>
+
+                    <div class="qr-content">
+                        <img src="/images/qr-thanhtoan.jpg" alt="QR thanh toán" />
+
+                        <div class="qr-info">
+                            <p><strong>Ngân hàng:</strong> MB Bank</p>
+                            <p><strong>Chủ tài khoản:</strong> CƯỜNG THUẬN SHOP</p>
+                            <p><strong>Nội dung:</strong> Thanh toán đơn hàng</p>
+                            <p class="qr-note">
+                                Sau khi chuyển khoản xong, vui lòng bấm nút
+                                <strong>“Xác nhận đã thanh toán”</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitOrderBtn">
+                    Xác nhận đặt hàng
+                </button>
+            </form>
+        </div>
+
+        <div class="checkout-summary">
+            <h3>Đơn hàng của bạn</h3>
+
+            @foreach (var item in Model)
+            {
+                <div class="summary-item">
+                    <span>@item.TenSP x @item.SoLuong</span>
+                    <strong>@item.ThanhTien.ToString("N0")đ</strong>
+                </div>
+            }
+
+            <div class="summary-total">
+                <span>Tổng thanh toán</span>
+                <strong>@Model.Sum(x => x.ThanhTien).ToString("N0")đ</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const paymentSelect = document.getElementById("phuongThucThanhToan");
+    const qrBox = document.getElementById("qrPaymentBox");
+    const submitBtn = document.getElementById("submitOrderBtn");
+
+    paymentSelect.addEventListener("change", function () {
+        if (this.value === "ChuyenKhoan") {
+            qrBox.style.display = "block";
+            submitBtn.innerText = "Xác nhận đã thanh toán";
+        } else if (this.value === "COD") {
+            qrBox.style.display = "none";
+            submitBtn.innerText = "Xác nhận đặt hàng";
+        } else {
+            qrBox.style.display = "none";
+            submitBtn.innerText = "Xác nhận đặt hàng";
+        }
+    });
+</script>

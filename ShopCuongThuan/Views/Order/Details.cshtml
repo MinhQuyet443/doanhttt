@@ -1,0 +1,79 @@
+﻿@model ShopCuongThuan.Models.DonHang
+
+<div class="order-detail-wrapper">
+    <div class="order-detail-header">
+        <div>
+            <h2>Chi tiết đơn hàng</h2>
+            <p>Mã đơn hàng: <strong>@Model.MaTraCuu</strong></p>
+        </div>
+
+        <a href="/Order/MyOrders" class="back-btn">Quay lại danh sách</a>
+    </div>
+
+    <div class="order-detail-grid">
+        <div class="order-detail-box">
+            <h3>Thông tin nhận hàng</h3>
+
+            <p><span>Người nhận:</span> <strong>@Model.HoTenNhan</strong></p>
+            <p><span>Số điện thoại:</span> <strong>@Model.SoDienThoai</strong></p>
+            <p><span>Địa chỉ:</span> <strong>@Model.DiaChi</strong></p>
+            <p><span>Phương thức thanh toán:</span> <strong>@Model.PhuongThucThanhToan</strong></p>
+            <p><span>Ngày đặt:</span> <strong>@Model.NgayDat.ToString("dd/MM/yyyy HH:mm")</strong></p>
+            <p><span>Trạng thái:</span> <strong class="order-status">@Model.TrangThai</strong></p>
+        </div>
+
+        <div class="order-detail-box">
+            <h3>Tổng thanh toán</h3>
+
+            <div class="order-total-price">
+                @Model.TongTien.ToString("N0")đ
+            </div>
+
+            <p class="order-note">
+                Đơn hàng sẽ được nhân viên xử lý và cập nhật trạng thái trong hệ thống.
+            </p>
+        </div>
+    </div>
+
+    <div class="order-detail-box" style="margin-top: 20px;">
+        <h3>Sản phẩm trong đơn hàng</h3>
+
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.ChiTietDonHangs)
+                {
+                    <tr>
+                        <td class="cart-product">
+                            <img src="/images/@item.SanPham?.HinhAnh" alt="@item.SanPham?.TenSP" />
+
+                            <div>
+                                <strong>@item.SanPham?.TenSP</strong>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="price">@item.DonGia.ToString("N0")đ</span>
+                        </td>
+
+                        <td>
+                            @item.SoLuong
+                        </td>
+
+                        <td>
+                            <strong class="price">@item.ThanhTien.ToString("N0")đ</strong>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

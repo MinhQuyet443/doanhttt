@@ -1,0 +1,134 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var maQuyen = Context.Session.GetInt32("MaQuyen");
+    bool laQuanLy = maQuyen == 1;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>Quản trị - F4 Shop</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body>
+    <div class="admin-wrapper">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                F4Shop
+                <span>Admin</span>
+            </div>
+
+            <nav>
+    <a href="/Admin">📊 Tổng quan</a>
+
+    <a href="/AdminTaoDon">🧾 Tạo đơn trực tiếp</a>
+
+    @if (laQuanLy)
+    {
+        <a href="/AdminSanPham">💻 Quản lý sản phẩm</a>
+    }
+    else
+    {
+        <a class="menu-disabled" aria-disabled="true">
+            💻 Quản lý sản phẩm
+        </a>
+    }
+
+    <a href="/AdminNhapHang">📥 Nhập hàng</a>
+
+    @if (laQuanLy)
+    {
+        <a href="/AdminDanhMuc">📁 Quản lý danh mục</a>
+    }
+    else
+    {
+        <a class="menu-disabled" aria-disabled="true">
+            📁 Quản lý danh mục
+        </a>
+    }
+
+    <a href="/AdminDonHang">🧾 Quản lý đơn hàng</a>
+
+    @if (laQuanLy)
+    {
+        <a href="/AdminNhanVien">👨‍💼 Quản lý nhân viên</a>
+    }
+    else
+    {
+        <a class="menu-disabled" aria-disabled="true">
+            👨‍💼 Quản lý nhân viên
+        </a>
+    }
+
+    @if (laQuanLy)
+    {
+        <a href="/AdminKhuyenMai">🎁 Quản lý khuyến mãi</a>
+    }
+    else
+    {
+        <a class="menu-disabled" aria-disabled="true">
+            🎁 Quản lý khuyến mãi
+        </a>
+    }
+
+    @if (laQuanLy)
+    {
+        <a href="/AdminThongKe">📊 Thống kê doanh thu</a>
+    }
+    else
+    {
+        <a class="menu-disabled" aria-disabled="true">
+            📊 Thống kê doanh thu
+        </a>
+    }
+
+    @if (laQuanLy)
+    {
+        <a href="/AdminKiemKeKho">📦 Kiểm kê kho</a>
+    }
+    else
+    {
+        <a class="menu-disabled" aria-disabled="true">
+            📦 Kiểm kê kho
+        </a>
+    }
+</nav>
+        </aside>
+
+        <section class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <h2>Hệ thống quản trị</h2>
+                    
+                </div>
+
+                <div class="admin-user">
+
+                    <a href="/AdminAuth/Profile"
+                       class="admin-user-profile">
+
+                        <span class="admin-user-icon">
+                            👤
+                        </span>
+
+                        <span class="admin-user-info">
+                            <small>Xin chào</small>
+
+                            <strong>
+                                @Context.Session.GetString("TenNV")
+                            </strong>
+                        </span>
+
+                    </a>
+
+                </div>
+            </header>
+
+            <main class="admin-content">
+                @RenderBody()
+            </main>
+        </section>
+    </div>
+</body>
+</html>

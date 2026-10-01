@@ -1,0 +1,45 @@
+﻿@model ShopCuongThuan.Models.DanhMuc
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-box">
+
+    <h2>Thêm danh mục</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="category-error">
+            ⚠️ @ViewBag.Error
+        </div>
+    }
+
+    <form method="post"
+          action="/AdminDanhMuc/Create"
+          class="admin-form">
+
+        <label>Tên danh mục</label>
+
+        <input type="text"
+               name="TenDM"
+               value="@Model?.TenDM"
+            
+               maxlength="100"
+               required />
+
+      
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">
+                Lưu
+            </button>
+
+            <a href="/AdminDanhMuc" class="btn-back">
+                Quay lại
+            </a>
+        </div>
+
+    </form>
+
+</div>

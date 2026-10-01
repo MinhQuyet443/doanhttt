@@ -1,0 +1,123 @@
+﻿@model ShopCuongThuan.Models.NhanVien
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="account-page">
+
+    <div class="account-card account-form-card">
+
+        <div class="account-form-heading">
+
+            <div class="account-form-heading-icon">
+                ✏
+            </div>
+
+            <div>
+                <h2>Cập nhật thông tin cá nhân</h2>
+
+                <p>
+                    Thay đổi thông tin cá nhân của tài khoản
+                </p>
+            </div>
+
+        </div>
+
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="account-alert-error">
+                ⚠ @ViewBag.Error
+            </div>
+        }
+
+
+        <form method="post"
+              action="/AdminAuth/UpdateProfile"
+              class="account-form">
+
+            <div class="account-form-group">
+
+                <label>
+                    Họ và tên
+                </label>
+
+                <input type="text"
+                       name="tenNV"
+                       value="@Model.TenNV"
+                       placeholder="Nhập họ và tên"
+                       required />
+
+            </div>
+
+
+            <div class="account-form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input type="email"
+                       name="email"
+                       value="@Model.Email"
+                       placeholder="Nhập email" />
+
+            </div>
+
+
+            <div class="account-form-group">
+
+                <label>
+                    Số điện thoại
+                </label>
+
+                <input type="text"
+                       name="soDienThoai"
+                       value="@Model.SoDienThoai"
+                       placeholder="Nhập số điện thoại" />
+
+            </div>
+
+
+            <div class="account-form-group">
+
+                <label>
+                    Tên đăng nhập
+                </label>
+
+                <input type="text"
+                       value="@Model.Username"
+                       disabled />
+
+                <small>
+                    Tên đăng nhập không thể thay đổi tại đây.
+                </small>
+
+            </div>
+
+
+            <div class="account-form-actions">
+
+                <button type="submit"
+                        class="account-btn account-btn-primary">
+
+                    ✓ Lưu thay đổi
+
+                </button>
+
+
+                <a href="/AdminAuth/Profile"
+                   class="account-btn account-btn-light">
+
+                    ← Quay lại
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

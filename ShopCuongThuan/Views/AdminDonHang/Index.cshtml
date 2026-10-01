@@ -1,0 +1,47 @@
+﻿@model List<ShopCuongThuan.Models.DonHang>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-box">
+    <div class="admin-title">
+        <h2>Quản lý đơn hàng</h2>
+        <form method="get" action="/AdminDonHang" class="admin-search-form">
+            <input type="text" name="search" value="@ViewBag.Search"  />
+            <button type="submit">Tìm kiếm</button>
+            <a href="/AdminDonHang">Tất cả</a>
+        </form>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Mã tra cứu</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>SĐT</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Chi tiết</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaTraCuu</td>
+                    <td>@item.HoTenNhan</td>
+                    <td>@item.NgayDat.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.SoDienThoai</td>
+                    <td>@item.TongTien.ToString("N0")đ</td>
+                    <td><span class="status">@item.TrangThai</span></td>
+                    <td>
+                        <a href="/AdminDonHang/Details/@item.MaDH" class="btn-detail">Xem</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

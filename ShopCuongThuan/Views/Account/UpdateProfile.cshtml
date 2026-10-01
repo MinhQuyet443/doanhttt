@@ -1,0 +1,92 @@
+﻿@model ShopCuongThuan.Models.KhachHang
+
+<div class="profile-wrapper">
+
+    <div class="profile-card profile-form-card">
+
+        <div class="profile-heading">
+
+            <div>
+                <h2>Cập nhật thông tin cá nhân</h2>
+
+                <p>
+                    Chỉnh sửa các thông tin tài khoản của bạn.
+                </p>
+            </div>
+
+        </div>
+
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert-error">
+                @ViewBag.Error
+            </div>
+        }
+
+
+        <form method="post"
+              action="/Account/UpdateProfile"
+              class="profile-form">
+
+            <label>
+                Họ và tên
+            </label>
+
+            <input type="text"
+                   name="hoTen"
+                   value="@Model.HoTen"
+                   required />
+
+
+            <label>
+                Email
+            </label>
+
+            <input type="email"
+                   name="email"
+                   value="@Model.Email"
+                   required />
+
+
+            <label>
+                Số điện thoại
+            </label>
+
+            <input type="text"
+                   name="soDienThoai"
+                   value="@Model.SoDienThoai" />
+
+
+            <label>
+                Địa chỉ
+            </label>
+
+            <textarea name="diaChi"
+                      rows="3">@Model.DiaChi</textarea>
+
+
+            <div class="profile-form-actions">
+
+                <button type="submit"
+                        class="profile-btn primary">
+
+                    Lưu thay đổi
+
+                </button>
+
+
+                <a href="/Account/Profile"
+                   class="profile-btn light">
+
+                    Quay lại
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

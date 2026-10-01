@@ -1,0 +1,117 @@
+﻿@model List<ShopCuongThuan.Models.PhieuNhap>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-card">
+    <div class="admin-page-title">
+        <div>
+            <h2>Nhập hàng</h2>
+            <form method="get" action="/AdminNhapHang" class="admin-search-form">
+                <input type="text" name="search" value="@ViewBag.Search"  />
+                <button type="submit">Tìm kiếm</button>
+                <a href="/AdminNhapHang">Tất cả</a>
+            </form>
+            <p class="admin-muted">
+                Quản lý các phiếu nhập hàng vào kho. Khi tạo phiếu nhập, số lượng nhập sẽ được cộng vào tồn kho hiện tại.
+            </p>
+        </div>
+
+        <a href="/AdminNhapHang/Create" class="save-btn">+ Tạo phiếu nhập</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="admin-alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="admin-alert-error">
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (Model.Count == 0)
+    {
+        <div class="admin-empty-box">
+            Chưa có phiếu nhập hàng nào.
+        </div>
+    }
+    else
+    {
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Mã phiếu nhập</th>
+                    <th>Ngày nhập</th>
+                    <th>Người nhập</th>
+                    <th>Tổng tiền nhập</th>
+                    <th>Ghi chú</th>
+                    <th>Chi tiết</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <strong>
+                                @if (!string.IsNullOrWhiteSpace(item.MaPhieuNhap))
+                                {
+                                    @item.MaPhieuNhap
+                                }
+                                else
+                                {
+                                    @("PN" + item.MaPN)
+                                }
+                            </strong>
+                        </td>
+
+                        <td>
+                            @item.NgayNhap.ToString("dd/MM/yyyy HH:mm")
+                        </td>
+
+                        <td>
+                            @if (item.NhanVien != null)
+                            {
+                                @item.NhanVien.TenNV
+                            }
+                            else
+                            {
+                                <span>Không xác định</span>
+                            }
+                        </td>
+
+                        <td>
+                            <strong class="admin-money">
+                                @item.TongTien.ToString("N0")đ
+                            </strong>
+                        </td>
+
+                        <td>
+                            @if (!string.IsNullOrWhiteSpace(item.GhiChu))
+                            {
+                                @item.GhiChu
+                            }
+                            else
+                            {
+                                <span class="admin-muted-text">Không có ghi chú</span>
+                            }
+                        </td>
+
+                        <td>
+                            <a href="/AdminNhapHang/Details/@item.MaPN" class="edit-btn">
+                                Xem
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

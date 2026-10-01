@@ -1,0 +1,34 @@
+﻿<div class="auth-wrapper">
+    <div class="auth-box">
+        <h2>Đăng ký tài khoản</h2>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert-error">@ViewBag.Error</div>
+        }
+
+        <form method="post" action="/Account/Register">
+            <label>Họ tên</label>
+            <input type="text" name="hoTen" required />
+
+            <label>Email</label>
+            <input type="email" name="email" required />
+
+            <label>Số điện thoại</label>
+            <input type="text" name="soDienThoai" required />
+
+            <label>Địa chỉ</label>
+            <input type="text" name="diaChi" required />
+
+            <label>Mật khẩu</label>
+            <input type="password" name="matKhau" required />
+
+            <button type="submit">Đăng ký</button>
+        </form>
+
+        <p>
+            Đã có tài khoản?
+            <a href="/Account/Login">Đăng nhập</a>
+        </p>
+    </div>
+</div>

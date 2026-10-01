@@ -1,0 +1,57 @@
+﻿@model List<ShopCuongThuan.Models.NhanVien>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-box">
+    <div class="admin-title">
+        <h2>Quản lý nhân viên</h2>
+        <a href="/AdminNhanVien/Create" class="btn-add">+ Thêm nhân viên</a>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Tên nhân viên</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Tài khoản</th>
+                <th>Quyền</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TenNV</td>
+                    <td>@item.Email</td>
+                    <td>@item.SoDienThoai</td>
+                    <td>@item.Username</td>
+                    <td>@item.PhanQuyen?.TenQuyen</td>
+                    <td>
+                        @if (item.TrangThai)
+                        {
+                            <span class="status">Hoạt động</span>
+                        }
+                        else
+                        {
+                            <span class="status">Khóa</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="/AdminNhanVien/Edit/@item.MaNV" class="btn-edit">Sửa</a>
+
+                        <form method="post" action="/AdminNhanVien/Delete" style="display:inline">
+                            <input type="hidden" name="id" value="@item.MaNV" />
+                            <button type="submit" class="btn-delete">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

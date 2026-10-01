@@ -1,0 +1,66 @@
+﻿@model List<ShopCuongThuan.Models.KhuyenMai>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-box">
+    <div class="admin-title">
+        <h2>Quản lý khuyến mãi</h2>
+        <form method="get" action="/AdminKhuyenMai" class="admin-search-form">
+            <input type="text" name="search" value="@ViewBag.Search"  />
+            <button type="submit">Tìm kiếm</button>
+            <a href="/AdminKhuyenMai">Tất cả</a>
+        </form>
+        <a href="/AdminKhuyenMai/Create" class="btn-add">+ Thêm khuyến mãi</a>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Tên khuyến mãi</th>
+                <th>Sản phẩm</th>
+                <th>Loại giảm</th>
+                <th>Giá trị</th>
+                <th>Thời gian</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TenKM</td>
+                    <td>@item.SanPham?.TenSP</td>
+                    <td>@item.LoaiGiamGia</td>
+                    <td>@item.GiaTriGiam.ToString("N0")</td>
+                    <td>
+                        @item.NgayBatDau?.ToString("dd/MM/yyyy")
+                        -
+                        @item.NgayKetThuc?.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @if (item.TrangThai)
+                        {
+                            <span class="status">Đang áp dụng</span>
+                        }
+                        else
+                        {
+                            <span class="status">Tạm dừng</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="/AdminKhuyenMai/Edit/@item.MaKM" class="btn-edit">Sửa</a>
+
+                        <form method="post" action="/AdminKhuyenMai/Delete" style="display:inline">
+                            <input type="hidden" name="id" value="@item.MaKM" />
+                            <button type="submit" class="btn-delete">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

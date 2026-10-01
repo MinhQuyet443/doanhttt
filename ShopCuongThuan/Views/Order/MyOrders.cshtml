@@ -1,0 +1,62 @@
+﻿@model List<ShopCuongThuan.Models.DonHang>
+
+<div class="order-list-wrapper">
+    <div class="order-list-header">
+        <div>
+            <h2>Danh sách đơn hàng</h2>
+            <p>Theo dõi các đơn hàng bạn đã đặt </p>
+        </div>
+
+        <a href="/" class="back-btn">Tiếp tục mua sắm</a>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="empty-box">
+            Bạn chưa có đơn hàng nào.
+            <br />
+            <a href="/">Quay về trang chủ</a>
+        </div>
+    }
+    else
+    {
+        <div class="order-list">
+            @foreach (var item in Model)
+            {
+                <div class="order-card">
+                    <div class="order-card-top">
+                        <div>
+                            <h3>Đơn hàng @item.MaTraCuu</h3>
+                            <p>Ngày đặt: @item.NgayDat.ToString("dd/MM/yyyy HH:mm")</p>
+                        </div>
+
+                        <span class="order-status">@item.TrangThai</span>
+                    </div>
+
+                    <div class="order-card-info">
+                        <div>
+                            <span>Người nhận</span>
+                            <strong>@item.HoTenNhan</strong>
+                        </div>
+
+                        <div>
+                            <span>Số điện thoại</span>
+                            <strong>@item.SoDienThoai</strong>
+                        </div>
+
+                        <div>
+                            <span>Tổng tiền</span>
+                            <strong class="price">@item.TongTien.ToString("N0")đ</strong>
+                        </div>
+                    </div>
+
+                    <div class="order-card-bottom">
+                        <a href="/Order/Details/@item.MaDH" class="checkout-btn">
+                            Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "_AdminLayout";
+    var phanQuyens = ViewBag.PhanQuyen as List<ShopCuongThuan.Models.PhanQuyen>;
+}
+
+<div class="admin-box">
+    <h2>Thêm nhân viên</h2>
+
+    <form method="post" action="/AdminNhanVien/Create" class="admin-form">
+        <label>Tên nhân viên</label>
+        <input type="text" name="TenNV" required />
+
+        <label>Email</label>
+        <input type="email" name="Email" />
+
+        <label>Số điện thoại</label>
+        <input type="text" name="SoDienThoai" />
+
+        <label>Tên đăng nhập</label>
+        <input type="text" name="Username" required />
+
+        <label>Mật khẩu</label>
+        <input type="text" name="Password" required />
+
+        <label>Quyền</label>
+        <select name="MaQuyen">
+            @foreach (var q in phanQuyens!)
+            {
+                <option value="@q.MaQuyen">@q.TenQuyen</option>
+            }
+        </select>
+
+        <label>Trạng thái</label>
+        <select name="TrangThai">
+            <option value="true">Hoạt động</option>
+            <option value="false">Khóa</option>
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Lưu</button>
+            <a href="/AdminNhanVien" class="btn-back">Quay lại</a>
+        </div>
+    </form>
+</div>

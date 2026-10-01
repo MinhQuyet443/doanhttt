@@ -1,0 +1,48 @@
+﻿@model ShopCuongThuan.Models.SanPham
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var danhMucs = ViewBag.DanhMuc as List<ShopCuongThuan.Models.DanhMuc>;
+}
+
+<div class="admin-card">
+    <h2>Thêm sản phẩm</h2>
+
+    <form method="post" action="/AdminSanPham/Create" enctype="multipart/form-data" class="admin-form">
+
+        <label>Tên sản phẩm</label>
+        <input type="text" name="TenSP" required />
+
+        <label>Danh mục</label>
+        <select name="MaDM" required>
+            @if (danhMucs != null)
+            {
+                foreach (var dm in danhMucs)
+                {
+                    <option value="@dm.MaDM">@dm.TenDM</option>
+                }
+            }
+        </select>
+
+        <label>Hãng</label>
+        <input type="text" name="Hang" />
+
+        <label>Giá bán</label>
+        <input type="number" name="GiaBan" required />
+
+        <label>Mô tả</label>
+        <textarea name="MoTa" rows="4"></textarea>
+
+        <label>Chọn ảnh sản phẩm</label>
+        <input type="file" name="UploadImage" accept="image/*" />
+
+        <label>Số lượng tồn</label>
+        <input type="number" name="SoLuongTon" value="0" />
+
+        <div class="form-actions">
+            <button type="submit" class="save-btn">Lưu</button>
+            <a href="/AdminSanPham" class="cancel-btn">Quay lại</a>
+        </div>
+
+    </form>
+</div>

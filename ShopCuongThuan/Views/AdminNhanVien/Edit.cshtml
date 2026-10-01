@@ -1,0 +1,63 @@
+﻿@model ShopCuongThuan.Models.NhanVien
+
+@{
+    Layout = "_AdminLayout";
+    var phanQuyens = ViewBag.PhanQuyen as List<ShopCuongThuan.Models.PhanQuyen>;
+}
+
+<div class="admin-box">
+    <h2>Sửa nhân viên</h2>
+
+    <form method="post" action="/AdminNhanVien/Edit" class="admin-form">
+        <input type="hidden" name="MaNV" value="@Model.MaNV" />
+
+        <label>Tên nhân viên</label>
+        <input type="text" name="TenNV" value="@Model.TenNV" required />
+
+        <label>Email</label>
+        <input type="email" name="Email" value="@Model.Email" />
+
+        <label>Số điện thoại</label>
+        <input type="text" name="SoDienThoai" value="@Model.SoDienThoai" />
+
+        <label>Tên đăng nhập</label>
+        <input type="text" name="Username" value="@Model.Username" required />
+
+        <label>Mật khẩu</label>
+        <input type="text" name="Password" value="@Model.Password" required />
+
+        <label>Quyền</label>
+        <select name="MaQuyen">
+            @foreach (var q in phanQuyens!)
+            {
+                if (q.MaQuyen == Model.MaQuyen)
+                {
+                    <option value="@q.MaQuyen" selected>@q.TenQuyen</option>
+                }
+                else
+                {
+                    <option value="@q.MaQuyen">@q.TenQuyen</option>
+                }
+            }
+        </select>
+
+        <label>Trạng thái</label>
+        <select name="TrangThai">
+            @if (Model.TrangThai)
+            {
+                <option value="true" selected>Hoạt động</option>
+                <option value="false">Khóa</option>
+            }
+            else
+            {
+                <option value="true">Hoạt động</option>
+                <option value="false" selected>Khóa</option>
+            }
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Cập nhật</button>
+            <a href="/AdminNhanVien" class="btn-back">Quay lại</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,106 @@
+﻿@model List<ShopCuongThuan.Models.SanPham>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-card">
+    <h2>Tạo phiếu nhập hàng</h2>
+    <p class="admin-muted">
+        Chọn sản phẩm cần nhập, nhập số lượng và đơn giá nhập.
+        Hệ thống sẽ tự cộng số lượng nhập vào số lượng tồn hiện tại.
+    </p>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="admin-alert-error">@TempData["Error"]</div>
+    }
+
+    <form method="post" action="/AdminNhapHang/Create">
+
+        <div class="admin-form-grid">
+            <div>
+                <label>Mã phiếu nhập</label>
+                <input type="text"
+                       name="maPhieuNhap"
+                       placeholder="Ví dụ: PN001"
+                       required />
+            </div>
+
+            <div>
+                <label>Ghi chú</label>
+                <input type="text"
+                       name="ghiChu"
+                       placeholder="Ví dụ: Nhập hàng từ nhà cung cấp" />
+            </div>
+        </div>
+
+        <h3>Danh sách sản phẩm</h3>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Chọn</th>
+                    <th>Ảnh</th>
+                    <th>Sản phẩm</th>
+                    <th>Danh mục</th>
+                    <th>Giá bán</th>
+                    <th>Tồn cũ</th>
+                    <th>Số lượng nhập</th>
+                    <th>Đơn giá nhập</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="selectedProducts" value="@item.MaSP" />
+                        </td>
+
+                        <td>
+                            <img src="/images/@item.HinhAnh" class="admin-product-img" />
+                        </td>
+
+                        <td>
+                            <strong>@item.TenSP</strong>
+                            <br />
+                            <small>@item.Hang</small>
+                        </td>
+
+                        <td>@item.DanhMuc?.TenDM</td>
+
+                        <td>@item.GiaBan.ToString("N0")đ</td>
+
+                        <td>
+                            <strong>@item.SoLuongTon</strong>
+                        </td>
+
+                        <td>
+                            <input type="number"
+                                   name="qty_@item.MaSP"
+                                   min="1"
+                                   value="1"
+                                   class="inventory-input" />
+                        </td>
+
+                        <td>
+                            <input type="number"
+                                   name="price_@item.MaSP"
+                                   min="0"
+                                   value="0"
+                                   class="import-price-input" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="form-actions">
+            <button type="submit" class="save-btn">Lưu phiếu nhập</button>
+            <a href="/AdminNhapHang" class="cancel-btn">Quay lại</a>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "_AdminLayout";
+    var sanPhams = ViewBag.SanPham as List<ShopCuongThuan.Models.SanPham>;
+}
+
+<div class="admin-box">
+    <h2>Thêm khuyến mãi</h2>
+
+    <form method="post" action="/AdminKhuyenMai/Create" class="admin-form">
+        <label>Sản phẩm</label>
+        <select name="MaSP" required>
+            @foreach (var sp in sanPhams!)
+            {
+                <option value="@sp.MaSP">@sp.TenSP</option>
+            }
+        </select>
+
+        <label>Tên khuyến mãi</label>
+        <input type="text" name="TenKM" required />
+
+        <label>Loại giảm giá</label>
+        <select name="LoaiGiamGia">
+            <option value="PhanTram">Giảm theo phần trăm</option>
+            <option value="SoTien">Giảm theo số tiền</option>
+        </select>
+
+        <label>Giá trị giảm</label>
+        <input type="number" name="GiaTriGiam" required />
+
+        <label>Ngày bắt đầu</label>
+        <input type="date" name="NgayBatDau" />
+
+        <label>Ngày kết thúc</label>
+        <input type="date" name="NgayKetThuc" />
+
+        <label>Trạng thái</label>
+        <select name="TrangThai">
+            <option value="true">Đang áp dụng</option>
+            <option value="false">Tạm dừng</option>
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Lưu</button>
+            <a href="/AdminKhuyenMai" class="btn-back">Quay lại</a>
+        </div>
+    </form>
+</div>

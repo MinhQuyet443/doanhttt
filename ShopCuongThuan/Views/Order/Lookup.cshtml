@@ -1,0 +1,62 @@
+﻿@model ShopCuongThuan.Models.DonHang?
+
+<div class="lookup-wrapper">
+    <h2>Tra cứu đơn hàng</h2>
+
+    <form method="get" action="/Order/Lookup" class="lookup-form">
+        <label>Mã đơn hàng</label>
+        <input type="text" name="maTraCuu" value="@ViewBag.MaTraCuu" placeholder="Ví dụ: DH20260704120000" required />
+
+        <label>Số điện thoại</label>
+        <input type="text" name="soDienThoai" value="@ViewBag.SoDienThoai" placeholder="Nhập số điện thoại đặt hàng" required />
+
+        <button type="submit">Tra cứu</button>
+    </form>
+
+    @if (ViewBag.MaTraCuu != null && Model == null)
+    {
+        <div class="alert-error">
+            Không tìm thấy đơn hàng. Vui lòng kiểm tra lại mã đơn và số điện thoại.
+        </div>
+    }
+
+    @if (Model != null)
+    {
+        <div class="order-result">
+            <h3>Thông tin đơn hàng</h3>
+
+            <p><strong>Mã tra cứu:</strong> @Model.MaTraCuu</p>
+            <p><strong>Ngày đặt:</strong> @Model.NgayDat.ToString("dd/MM/yyyy HH:mm")</p>
+            <p><strong>Người nhận:</strong> @Model.HoTenNhan</p>
+            <p><strong>Số điện thoại:</strong> @Model.SoDienThoai</p>
+            <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
+            <p><strong>Trạng thái:</strong> <span class="status">@Model.TrangThai</span></p>
+            <p><strong>Tổng tiền:</strong> <span class="price">@Model.TongTien.ToString("N0")đ</span></p>
+
+            <h3>Chi tiết sản phẩm</h3>
+
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.ChiTietDonHangs)
+                    {
+                        <tr>
+                            <td>@item.SanPham?.TenSP</td>
+                            <td>@item.SoLuong</td>
+                            <td>@item.DonGia.ToString("N0")đ</td>
+                            <td>@item.ThanhTien.ToString("N0")đ</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

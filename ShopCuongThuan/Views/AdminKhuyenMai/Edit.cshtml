@@ -1,0 +1,74 @@
+﻿@model ShopCuongThuan.Models.KhuyenMai
+
+@{
+    Layout = "_AdminLayout";
+    var sanPhams = ViewBag.SanPham as List<ShopCuongThuan.Models.SanPham>;
+}
+
+<div class="admin-box">
+    <h2>Sửa khuyến mãi</h2>
+
+    <form method="post" action="/AdminKhuyenMai/Edit" class="admin-form">
+        <input type="hidden" name="MaKM" value="@Model.MaKM" />
+
+        <label>Sản phẩm</label>
+        <select name="MaSP" required>
+            @foreach (var sp in sanPhams!)
+            {
+                if (sp.MaSP == Model.MaSP)
+                {
+                    <option value="@sp.MaSP" selected>@sp.TenSP</option>
+                }
+                else
+                {
+                    <option value="@sp.MaSP">@sp.TenSP</option>
+                }
+            }
+        </select>
+
+        <label>Tên khuyến mãi</label>
+        <input type="text" name="TenKM" value="@Model.TenKM" required />
+
+        <label>Loại giảm giá</label>
+        <select name="LoaiGiamGia">
+            @if (Model.LoaiGiamGia == "PhanTram")
+            {
+                <option value="PhanTram" selected>Giảm theo phần trăm</option>
+                <option value="SoTien">Giảm theo số tiền</option>
+            }
+            else
+            {
+                <option value="PhanTram">Giảm theo phần trăm</option>
+                <option value="SoTien" selected>Giảm theo số tiền</option>
+            }
+        </select>
+
+        <label>Giá trị giảm</label>
+        <input type="number" name="GiaTriGiam" value="@Model.GiaTriGiam" required />
+
+        <label>Ngày bắt đầu</label>
+        <input type="date" name="NgayBatDau" value="@Model.NgayBatDau?.ToString("yyyy-MM-dd")" />
+
+        <label>Ngày kết thúc</label>
+        <input type="date" name="NgayKetThuc" value="@Model.NgayKetThuc?.ToString("yyyy-MM-dd")" />
+
+        <label>Trạng thái</label>
+        <select name="TrangThai">
+            @if (Model.TrangThai)
+            {
+                <option value="true" selected>Đang áp dụng</option>
+                <option value="false">Tạm dừng</option>
+            }
+            else
+            {
+                <option value="true">Đang áp dụng</option>
+                <option value="false" selected>Tạm dừng</option>
+            }
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Cập nhật</button>
+            <a href="/AdminKhuyenMai" class="btn-back">Quay lại</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,86 @@
+﻿@model List<ShopCuongThuan.Models.GioHangItemViewModel>
+
+<div class="cart-wrapper">
+    <h2>Giỏ hàng của bạn</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="empty-box">
+            Giỏ hàng đang trống.
+            <br />
+            <a href="/">Tiếp tục mua sắm</a>
+        </div>
+    }
+    else
+    {
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="cart-product">
+                            <img src="/images/@item.HinhAnh" alt="@item.TenSP" />
+                            <div>
+                                <strong>@item.TenSP</strong>
+
+                                @if (item.CoKhuyenMai)
+                                {
+                                    <p>@item.GiamGiaText</p>
+                                }
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="price">@item.DonGia.ToString("N0")đ</span>
+
+                            @if (item.CoKhuyenMai)
+                            {
+                                <br />
+                                <span class="old-price">@item.GiaGoc.ToString("N0")đ</span>
+                            }
+                        </td>
+
+                        <td>
+                            <form method="post" action="/Cart/Update" class="quantity-form">
+                                <input type="hidden" name="maSP" value="@item.MaSP" />
+                                <input type="number" name="soLuong" value="@item.SoLuong" min="1" />
+                                <button type="submit">Cập nhật</button>
+                            </form>
+                        </td>
+
+                        <td>
+                            <strong class="price">@item.ThanhTien.ToString("N0")đ</strong>
+                        </td>
+
+                        <td>
+                            <form method="post" action="/Cart/Delete">
+                                <input type="hidden" name="maSP" value="@item.MaSP" />
+                                <button type="submit" class="delete-btn">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="cart-total">
+            <span>Tổng tiền:</span>
+            <strong>@Model.Sum(x => x.ThanhTien).ToString("N0")đ</strong>
+        </div>
+
+        <div class="cart-actions">
+            <a href="/" class="back-btn">Tiếp tục mua</a>
+            <a href="/Order/Checkout" class="checkout-btn">Đặt hàng</a>
+        </div>
+    }
+</div>

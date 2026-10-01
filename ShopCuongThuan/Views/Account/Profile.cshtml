@@ -1,0 +1,99 @@
+﻿@model ShopCuongThuan.Models.KhachHang
+
+<div class="profile-wrapper">
+
+    <div class="profile-card">
+
+        <div class="profile-heading">
+
+            <div>
+                <h2>Quản lý tài khoản</h2>
+
+                <p>
+                    Xem và quản lý thông tin cá nhân của bạn.
+                </p>
+            </div>
+
+            <div class="profile-avatar">
+                👤
+            </div>
+
+        </div>
+
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert-success">
+                @TempData["Success"]
+            </div>
+        }
+
+
+        <div class="profile-info">
+
+            <div class="profile-row">
+                <span>Họ và tên</span>
+
+                <strong>
+                    @Model.HoTen
+                </strong>
+            </div>
+
+
+            <div class="profile-row">
+                <span>Email</span>
+
+                <strong>
+                    @Model.Email
+                </strong>
+            </div>
+
+
+            <div class="profile-row">
+                <span>Số điện thoại</span>
+
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.SoDienThoai)
+                                        ? "Chưa cập nhật"
+                                        : Model.SoDienThoai)
+                </strong>
+            </div>
+
+
+            <div class="profile-row">
+                <span>Địa chỉ</span>
+
+                <strong>
+                    @(string.IsNullOrWhiteSpace(Model.DiaChi)
+                                        ? "Chưa cập nhật"
+                                        : Model.DiaChi)
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="profile-actions">
+
+            <a href="/Account/UpdateProfile"
+               class="profile-btn primary">
+                ✏️ Cập nhật thông tin cá nhân
+            </a>
+
+
+            <a href="/Account/ChangePassword"
+               class="profile-btn secondary">
+                🔒 Đổi mật khẩu
+            </a>
+
+
+            <a href="/Account/Logout"
+               class="profile-btn danger">
+                Đăng xuất
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

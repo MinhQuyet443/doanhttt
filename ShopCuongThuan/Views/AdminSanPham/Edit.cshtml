@@ -1,0 +1,71 @@
+﻿@model ShopCuongThuan.Models.SanPham
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var danhMucs = ViewBag.DanhMuc as List<ShopCuongThuan.Models.DanhMuc>;
+}
+
+<div class="admin-card">
+    <h2>Sửa sản phẩm</h2>
+
+    <form method="post" action="/AdminSanPham/Edit" enctype="multipart/form-data" class="admin-form">
+
+        <input type="hidden" name="MaSP" value="@Model.MaSP" />
+
+        <label>Tên sản phẩm</label>
+        <input type="text" name="TenSP" value="@Model.TenSP" required />
+
+        <label>Danh mục</label>
+        <select name="MaDM" required>
+            @if (danhMucs != null)
+            {
+                foreach (var dm in danhMucs)
+                {
+                    if (dm.MaDM == Model.MaDM)
+                    {
+                        <option value="@dm.MaDM" selected>@dm.TenDM</option>
+                    }
+                    else
+                    {
+                        <option value="@dm.MaDM">@dm.TenDM</option>
+                    }
+                }
+            }
+        </select>
+
+        <label>Hãng</label>
+        <input type="text" name="Hang" value="@Model.Hang" />
+
+        <label>Giá bán</label>
+        <input type="number" name="GiaBan" value="@Model.GiaBan" required />
+
+        <label>Mô tả</label>
+        <textarea name="MoTa" rows="4">@Model.MoTa</textarea>
+
+        <label>Ảnh hiện tại</label>
+
+        @if (!string.IsNullOrEmpty(Model.HinhAnh))
+        {
+            <div class="current-image-box">
+                <img src="/images/@Model.HinhAnh" alt="@Model.TenSP" />
+                <p>@Model.HinhAnh</p>
+            </div>
+        }
+        else
+        {
+            <p>Chưa có ảnh</p>
+        }
+
+        <label>Chọn ảnh mới</label>
+        <input type="file" name="UploadImage" accept="image/*" />
+
+        <label>Số lượng tồn</label>
+        <input type="number" name="SoLuongTon" value="@Model.SoLuongTon" />
+
+        <div class="form-actions">
+            <button type="submit" class="save-btn">Lưu thay đổi</button>
+            <a href="/AdminSanPham" class="cancel-btn">Quay lại</a>
+        </div>
+
+    </form>
+</div>

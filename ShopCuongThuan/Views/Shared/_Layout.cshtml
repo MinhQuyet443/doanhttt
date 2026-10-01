@@ -1,0 +1,180 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    var diaChiShop = "54 Triều Khúc, Thanh Xuân, Hà Nội";
+
+    // Link Google Maps cố định, tránh lỗi chỉ ra chữ 54
+    var googleMapUrl = "https://www.google.com/maps/search/?api=1&query=54%20Tri%E1%BB%81u%20Kh%C3%BAc%2C%20Thanh%20Xu%C3%A2n%2C%20H%C3%A0%20N%E1%BB%99i";
+
+    var hotline = "18000000";
+    var hotlineHienThi = "1800 0000";
+
+    var zalo = "0987654321";
+    var zaloHienThi = "0987 654 321";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title> F4Shop</title>
+
+    <link rel="stylesheet" href="/css/shop.css" />
+</head>
+
+<body>
+    <header class="top-header">
+
+        <!-- HEADER CHÍNH -->
+        <div class="main-header">
+            <a href="/" class="logo">
+                F4<span>Shop</span>
+            </a>
+
+            <a href="/" class="category-btn">
+                ☰ Danh mục
+            </a>
+
+            <a class="location-btn"
+               href="@googleMapUrl"
+               target="_blank">
+                📍 Hà Nội
+            </a>
+
+            <form class="search-box" method="get" action="/Home/Index">
+                <input type="text"
+                       name="search"
+                       value="@ViewBag.Search"
+                       placeholder="Bạn muốn mua gì hôm nay?" />
+
+                <button type="submit">🔍</button>
+            </form>
+
+            <a href="/Order/MyOrders" class="header-link">
+                Tra cứu đơn hàng
+            </a>
+
+            <a href="/Cart" class="cart-btn">
+                🛒 Giỏ hàng
+                <span>0</span>
+            </a>
+
+            @if (Context.Session.GetString("LoaiTaiKhoan") == null)
+            {
+                <a href="/Account/Login" class="user-btn">
+                    Đăng nhập 👤
+                </a>
+            }
+            else if (Context.Session.GetString("LoaiTaiKhoan") == "KhachHang")
+            {
+                <a href="/Account/Profile"
+                   class="user-btn"
+                   title="Quản lý tài khoản">
+                    👤 @Context.Session.GetString("HoTen")
+                </a>
+            }
+            else if (Context.Session.GetString("LoaiTaiKhoan") == "NhanVien")
+            {
+                <a href="/Admin" class="user-btn">
+                    Quản trị: @Context.Session.GetString("TenNV")
+                </a>
+
+                <a href="/Account/Logout" class="header-link">
+                    Đăng xuất
+                </a>
+            }
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- NÚT NỔI BÊN PHẢI -->
+    <div class="floating-buttons">
+        <button type="button" onclick="openMapAddress()">
+            Địa chỉ 📍
+        </button>
+
+        <button type="button" onclick="openContactModal()">
+            Liên hệ ☎
+        </button>
+    </div>
+
+    <!-- POPUP LIÊN HỆ -->
+    <div id="contactModal" class="contact-modal">
+        <div class="contact-box">
+            <button type="button" class="contact-close" onclick="closeContactModal()">
+                ×
+            </button>
+
+            <h2>Thông tin liên hệ</h2>
+
+         
+
+            <div class="contact-info">
+                <p>
+                    <strong>Hotline:</strong>
+                    <a href="tel:@hotline">
+                        @hotlineHienThi
+                    </a>
+                </p>
+
+                <p>
+                    <strong>Zalo:</strong>
+                    <a href="https://zalo.me/@zalo" target="_blank">
+                        @zaloHienThi
+                    </a>
+                </p>
+
+                <p>
+                    <strong>Địa chỉ:</strong>
+                    <a href="@googleMapUrl" target="_blank">
+                        @diaChiShop
+                    </a>
+                </p>
+            </div>
+
+            <div class="zalo-qr-box">
+                <p>Quét mã QR để nhắn tin Zalo</p>
+
+                <img src="/images/qr-zalo.png" alt="QR Zalo" />
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/shop.js"></script>
+
+    <script>
+        function openMapAddress() {
+            window.open("@googleMapUrl", "_blank");
+        }
+
+        function openContactModal() {
+            document.getElementById("contactModal").style.display = "flex";
+        }
+
+        function closeContactModal() {
+            document.getElementById("contactModal").style.display = "none";
+        }
+
+        document.addEventListener("click", function (event) {
+            const modal = document.getElementById("contactModal");
+
+            if (event.target === modal) {
+                closeContactModal();
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeContactModal();
+            }
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

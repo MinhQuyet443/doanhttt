@@ -1,0 +1,40 @@
+﻿@model List<ShopCuongThuan.Models.DanhMuc>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-box">
+    <div class="admin-title">
+        <h2>Quản lý danh mục</h2>
+        <a href="/AdminDanhMuc/Create" class="btn-add">+ Thêm danh mục</a>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Tên danh mục</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaDM</td>
+                    <td>@item.TenDM</td>
+                    <td>
+                        <a href="/AdminDanhMuc/Edit/@item.MaDM" class="btn-edit">Sửa</a>
+
+                        <form method="post" action="/AdminDanhMuc/Delete" style="display:inline">
+                            <input type="hidden" name="id" value="@item.MaDM" />
+                            <button type="submit" class="btn-delete">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

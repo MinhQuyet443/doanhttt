@@ -1,0 +1,224 @@
+﻿@model List<ShopCuongThuan.Models.SanPhamCardViewModel>
+
+@{
+    var danhMucs = ViewBag.DanhMuc as List<ShopCuongThuan.Models.DanhMuc>;
+    int? maDM = ViewBag.MaDM != null ? (int?)ViewBag.MaDM : null;
+
+    var laptopDM = danhMucs?.FirstOrDefault(x => x.TenDM.ToLower().Contains("laptop"))?.MaDM;
+    var dienThoaiDM = danhMucs?.FirstOrDefault(x => x.TenDM.ToLower().Contains("điện thoại"))?.MaDM;
+    var phuKienDM = danhMucs?.FirstOrDefault(x => x.TenDM.ToLower().Contains("phụ kiện"))?.MaDM;
+}
+
+<div class="page-wrapper">
+
+    <!-- CỘT TRÁI: DANH MỤC DỌC -->
+    <aside class="category-sidebar">
+
+        <a href="/Home/Index" class="category-menu-item @(maDM == null ? "active" : "")">
+            <span class="cat-icon">🏠</span>
+            <span>Tất cả sản phẩm</span>
+            <span class="cat-arrow">›</span>
+        </a>
+
+        @if (danhMucs != null)
+        {
+            foreach (var dm in danhMucs)
+            {
+                var tenDM = dm.TenDM.ToLower();
+                var icon = "📦";
+
+                if (tenDM.Contains("điện thoại"))
+                {
+                    icon = "📱";
+                }
+                else if (tenDM.Contains("laptop"))
+                {
+                    icon = "💻";
+                }
+                else if (tenDM.Contains("phụ kiện"))
+                {
+                    icon = "🔌";
+                }
+
+                <a href="/Home/Index?madm=@dm.MaDM"
+                   class="category-menu-item @(maDM == dm.MaDM ? "active" : "")">
+                    <span class="cat-icon">@icon</span>
+                    <span>@dm.TenDM</span>
+                    <span class="cat-arrow">›</span>
+                </a>
+            }
+        }
+
+        <a href="/Home/Index?search=gaming" class="category-menu-item">
+            <span class="cat-icon">🎮</span>
+            <span>Gaming</span>
+            <span class="cat-arrow">›</span>
+        </a>
+
+        <a href="/Home/Index?search=sinh viên" class="category-menu-item">
+            <span class="cat-icon">🎓</span>
+            <span>Sinh viên</span>
+            <span class="cat-arrow">›</span>
+        </a>
+
+        <a href="/Home/Index?search=khuyến mãi" class="category-menu-item">
+            <span class="cat-icon">🏷️</span>
+            <span>Khuyến mãi</span>
+            <span class="cat-arrow">›</span>
+        </a>
+
+        <a href="/Home/Index?hang=HP" class="category-menu-item">
+            <span class="cat-icon">💼</span>
+            <span>Văn phòng</span>
+            <span class="cat-arrow">›</span>
+        </a>
+
+        <a href="/Home/Index?hang=ASUS" class="category-menu-item">
+            <span class="cat-icon">🎨</span>
+            <span>Đồ họa - kỹ thuật</span>
+            <span class="cat-arrow">›</span>
+        </a>
+
+    </aside>
+
+
+    <!-- Ở GIỮA: DANH SÁCH SẢN PHẨM -->
+    <section class="content-area">
+
+        <div class="quick-filter">
+            <a href="/Home/Index?search=văn phòng" class="filter-item">💼 Văn phòng</a>
+            <a href="/Home/Index?hang=MSI" class="filter-item">🎮 Gaming</a>
+            <a href="/Home/Index?search=mỏng nhẹ" class="filter-item">💻 Mỏng nhẹ</a>
+            <a href="/Home/Index?hang=ASUS" class="filter-item">🎨 Đồ họa - kỹ thuật</a>
+            <a href="/Home/Index?search=sinh viên" class="filter-item">🎓 Sinh viên</a>
+        </div>
+
+        <div class="brand-filter">
+            <a href="/Home/Index">Tất cả</a>
+
+            @if (danhMucs != null)
+            {
+                foreach (var dm in danhMucs)
+                {
+                    <a href="/Home/Index?madm=@dm.MaDM">@dm.TenDM</a>
+                }
+            }
+
+            <a href="/Home/Index?hang=HP">HP</a>
+            <a href="/Home/Index?hang=ASUS">ASUS</a>
+            <a href="/Home/Index?hang=MSI">MSI</a>
+            <a href="/Home/Index?hang=Acer">Acer</a>
+            <a href="/Home/Index?hang=Samsung">Samsung</a>
+            <a href="/Home/Index?hang=Logitech">Logitech</a>
+        </div>
+
+        <div class="section-title">
+            <h2>Sản phẩm nổi bật</h2>
+            <a href="/Home/Index">Xem tất cả ›</a>
+        </div>
+
+        @if (Model.Count == 0)
+        {
+            <div class="empty-box">
+                Không tìm thấy sản phẩm phù hợp.
+            </div>
+        }
+        else
+        {
+            <div class="product-grid">
+                @foreach (var item in Model)
+                {
+                    <div class="product-card">
+
+                        @if (item.CoKhuyenMai)
+                        {
+                            <div class="discount-badge">@item.GiamGiaText</div>
+                        }
+
+                        <div class="installment-badge">Trả góp 0%</div>
+
+                        <div class="product-img">
+                            <img src="/images/@item.HinhAnh" alt="@item.TenSP" />
+                        </div>
+
+                        <h3>@item.TenSP</h3>
+
+                        <div class="price-row">
+                            <span class="price">@item.GiaHienThi.ToString("N0")đ</span>
+
+                            @if (item.CoKhuyenMai)
+                            {
+                                <span class="old-price">@item.GiaBan.ToString("N0")đ</span>
+                            }
+                        </div>
+
+                        @if (item.CoKhuyenMai)
+                        {
+                            <p class="gift">@item.TenKhuyenMai</p>
+                        }
+                        else
+                        {
+                            <p class="gift">Sản phẩm chính hãng, bảo hành đầy đủ</p>
+                        }
+
+                        <p class="description">@item.MoTa</p>
+
+                        <div class="product-actions">
+                            <form method="post" action="/Cart/BuyNow">
+                                <input type="hidden" name="id" value="@item.MaSP" />
+                                <button type="submit" class="buy-now-btn">Mua ngay</button>
+                            </form>
+
+                            <form method="post" action="/Cart/Add">
+                                <input type="hidden" name="id" value="@item.MaSP" />
+                                <button type="submit" class="add-cart-btn">Thêm vào giỏ</button>
+                            </form>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        }
+
+    </section>
+
+
+    <!-- CỘT PHẢI: BANNER QUẢNG CÁO -->
+    <aside class="right-banner">
+
+        <div class="banner-card big-banner">
+            <h3>Giảm thêm đến</h3>
+            <h1>2 Triệu</h1>
+            <p>Khi mua laptop, điện thoại và phụ kiện</p>
+
+            <img src="/images/banner-laptopk.jpg" alt="Banner laptop" />
+
+            @if (laptopDM != null)
+            {
+                <a href="/Home/Index?madm=@laptopDM">Mua ngay</a>
+            }
+            else
+            {
+                <a href="/Home/Index">Mua ngay</a>
+            }
+        </div>
+
+        <div class="banner-card small-banner">
+            <h3>Ưu đãi sinh viên</h3>
+            <p>Laptop, điện thoại, phụ kiện giá tốt dành cho học sinh - sinh viên</p>
+
+            <img src="/images/banner-sale.jpg" alt="Banner sale" />
+
+            @if (laptopDM != null)
+            {
+                <a href="/Home/Index?madm=@laptopDM">Xem ưu đãi</a>
+            }
+            else
+            {
+                <a href="/Home/Index">Xem ưu đãi</a>
+            }
+        </div>
+
+    </aside>
+
+</div>

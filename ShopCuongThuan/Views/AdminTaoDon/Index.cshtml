@@ -1,0 +1,101 @@
+﻿@model List<ShopCuongThuan.Models.SanPham>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="admin-card">
+    <h2>Tạo đơn bán trực tiếp</h2>
+    <p class="admin-muted">Dùng cho khách đến mua trực tiếp tại cửa hàng.</p>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="admin-alert-error">@TempData["Error"]</div>
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="admin-alert-success">@TempData["Success"]</div>
+    }
+
+    <form method="post" action="/AdminTaoDon/CreateDirectOrder">
+
+        <div class="admin-form-grid">
+            <div>
+                <label>Tên khách hàng</label>
+                <input type="text" name="hoTenNhan" placeholder="Khách mua trực tiếp" />
+            </div>
+
+            <div>
+                <label>Số điện thoại</label>
+                <input type="text" name="soDienThoai" placeholder="Có thể bỏ trống" />
+            </div>
+
+            <div>
+                <label>Địa chỉ</label>
+                <input type="text" name="diaChi" value="Mua trực tiếp tại cửa hàng" />
+            </div>
+
+            <div>
+                <label>Phương thức thanh toán</label>
+                <select name="phuongThucThanhToan" required>
+                    <option value="Tiền mặt">Tiền mặt</option>
+                    <option value="Chuyển khoản">Chuyển khoản</option>
+                </select>
+            </div>
+        </div>
+
+        <h3>Chọn sản phẩm</h3>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Chọn</th>
+                    <th>Ảnh</th>
+                    <th>Sản phẩm</th>
+                    <th>Danh mục</th>
+                    <th>Giá bán</th>
+                    <th>Tồn kho</th>
+                    <th>Số lượng bán</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="selectedProducts" value="@item.MaSP" />
+                        </td>
+
+                        <td>
+                            <img src="/images/@item.HinhAnh" class="admin-product-img" />
+                        </td>
+
+                        <td>
+                            <strong>@item.TenSP</strong>
+                            <br />
+                            <small>@item.Hang</small>
+                        </td>
+
+                        <td>@item.DanhMuc?.TenDM</td>
+
+                        <td>@item.GiaBan.ToString("N0")đ</td>
+
+                        <td>@item.SoLuongTon</td>
+
+                        <td>
+                            <input type="number" name="qty_@item.MaSP" value="1" min="1" style="width:90px;" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="form-actions">
+            <button type="submit" class="save-btn">Tạo đơn</button>
+            <a href="/Admin" class="cancel-btn">Quay lại</a>
+        </div>
+
+    </form>
+</div>

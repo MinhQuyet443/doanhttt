@@ -1,0 +1,30 @@
+﻿@model ShopCuongThuan.Models.DanhMuc
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-box">
+    <h2>Sửa danh mục</h2>
+    @if (ViewBag.Error != null)
+    {
+        <div class="category-error">
+            ⚠️ @ViewBag.Error
+        </div>
+    }
+
+    <form method="post" action="/AdminDanhMuc/Edit" class="admin-form">
+        <input type="hidden" name="MaDM" value="@Model.MaDM" />
+
+        <label>Tên danh mục</label>
+        <input type="text" name="TenDM" value="@Model.TenDM" required />
+        <small class="input-note">
+            Tên danh mục không được chỉ chứa số hoặc ký tự đặc biệt.
+        </small>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Cập nhật</button>
+            <a href="/AdminDanhMuc" class="btn-back">Quay lại</a>
+        </div>
+    </form>
+</div>

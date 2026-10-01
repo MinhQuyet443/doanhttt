@@ -1,0 +1,62 @@
+﻿@model ShopCuongThuan.Models.DonHang
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="admin-box">
+    <h2>Chi tiết đơn hàng</h2>
+
+    <p><strong>Mã tra cứu:</strong> @Model.MaTraCuu</p>
+    <p><strong>Người nhận:</strong> @Model.HoTenNhan</p>
+    <p><strong>Số điện thoại:</strong> @Model.SoDienThoai</p>
+    <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
+    <p><strong>Ngày đặt:</strong> @Model.NgayDat.ToString("dd/MM/yyyy HH:mm")</p>
+    <p><strong>Phương thức thanh toán:</strong> @Model.PhuongThucThanhToan</p>
+    <p><strong>Tổng tiền:</strong> @Model.TongTien.ToString("N0")đ</p>
+
+    <form method="post" action="/AdminDonHang/UpdateStatus" class="admin-form">
+        <input type="hidden" name="maDH" value="@Model.MaDH" />
+
+        <label>Cập nhật trạng thái</label>
+        <select name="trangThai">
+            <option value="Chờ xác nhận">Chờ xác nhận</option>
+            <option value="Đã xác nhận">Đã xác nhận</option>
+            <option value="Đang giao hàng">Đang giao hàng</option>
+            <option value="Hoàn thành">Hoàn thành</option>
+            <option value="Đã hủy">Đã hủy</option>
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">Cập nhật trạng thái</button>
+            <a href="/AdminDonHang" class="btn-back">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+<div class="admin-box" style="margin-top:20px">
+    <h2>Sản phẩm trong đơn</h2>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.ChiTietDonHangs)
+            {
+                <tr>
+                    <td>@item.SanPham?.TenSP</td>
+                    <td>@item.SoLuong</td>
+                    <td>@item.DonGia.ToString("N0")đ</td>
+                    <td>@item.ThanhTien.ToString("N0")đ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
