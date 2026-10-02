@@ -57,6 +57,11 @@ namespace ShopCuongThuan.Controllers
         [HttpPost]
         public IActionResult Register(string hoTen, string email, string soDienThoai, string diaChi, string matKhau)
         {
+            if (string.IsNullOrWhiteSpace(matKhau) || matKhau.Length <= 8)
+            {
+                ViewBag.Error = "Mật khẩu phải có trên 8 ký tự.";
+                return View();
+            }
             var checkEmail = _context.KhachHang.FirstOrDefault(kh => kh.Email == email);
 
             if (checkEmail != null)
@@ -64,7 +69,13 @@ namespace ShopCuongThuan.Controllers
                 ViewBag.Error = "Email này đã được sử dụng.";
                 return View();
             }
-
+            if (string.IsNullOrWhiteSpace(soDienThoai) ||
+    !System.Text.RegularExpressions.Regex.IsMatch(
+        soDienThoai.Trim(), @"^0\d{9}$"))
+            {
+                ViewBag.Error = "Số điện thoại không hợp lệ.";
+                return View();
+            }
             var khachHang = new KhachHang
             {
                 HoTen = hoTen,
@@ -228,9 +239,9 @@ namespace ShopCuongThuan.Controllers
                 return RedirectToAction("ForgotPassword");
             }
 
-            if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < 6)
+            if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length <= 8)
             {
-                ViewBag.Error = "Mật khẩu phải có ít nhất 6 ký tự.";
+                ViewBag.Error = "Mật khẩu phải có trên 8 ký tự.";
                 return View();
             }
 
@@ -257,7 +268,7 @@ namespace ShopCuongThuan.Controllers
             HttpContext.Session.Remove("ResetExpire");
             HttpContext.Session.Remove("ResetVerified");
 
-            TempData["Success"] = "Đặt lại mật khẩu thành công. Vui lòng đăng nhập.";
+            TempData["Success"] = "Đặt lại mật khẩu thành công.";
 
             return RedirectToAction("Login");
         }
@@ -346,6 +357,14 @@ namespace ShopCuongThuan.Controllers
                 ViewBag.Error = "Họ tên và email không được để trống.";
                 return View(khachHang);
             }
+            // Kiểm tra định dạng số điện thoại
+            if (!string.IsNullOrWhiteSpace(soDienThoai) &&
+                !System.Text.RegularExpressions.Regex.IsMatch(
+                    soDienThoai, @"^0\d{9}$"))
+            {
+                ViewBag.Error = "Số điện thoại sai định dạng.";
+                return View(khachHang);
+            }
 
             // Kiểm tra email có bị tài khoản khác sử dụng không
             var emailDaTonTai = _context.KhachHang.Any(kh =>
@@ -354,7 +373,7 @@ namespace ShopCuongThuan.Controllers
 
             if (emailDaTonTai)
             {
-                ViewBag.Error = "Email này đã được sử dụng bởi tài khoản khác.";
+                ViewBag.Error = "Email này đã được sử dụng .";
                 return View(khachHang);
             }
 
@@ -420,10 +439,11 @@ namespace ShopCuongThuan.Controllers
             }
 
             // Mật khẩu mới tối thiểu 6 ký tự
+            // Mật khẩu mới phải trên 8 ký tự
             if (string.IsNullOrWhiteSpace(newPassword) ||
-                newPassword.Length < 6)
+                newPassword.Length <= 8)
             {
-                ViewBag.Error = "Mật khẩu mới phải có ít nhất 6 ký tự.";
+                ViewBag.Error = "Mật khẩu mới phải có trên 8 ký tự.";
                 return View();
             }
 

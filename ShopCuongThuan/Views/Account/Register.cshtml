@@ -15,7 +15,14 @@
             <input type="email" name="email" required />
 
             <label>Số điện thoại</label>
-            <input type="text" name="soDienThoai" required />
+            <input type="tel"
+                   name="soDienThoai"
+                   id="soDienThoai"
+                   placeholder=""
+                   pattern="0[0-9]{9}"
+                   maxlength="10"
+                   title="Số điện thoại không hợp lệ"
+                   required />
 
             <label>Địa chỉ</label>
             <input type="text" name="diaChi" required />

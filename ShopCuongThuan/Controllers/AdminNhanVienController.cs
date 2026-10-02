@@ -69,7 +69,27 @@ namespace ShopCuongThuan.Controllers
             var check = CheckAdminLogin();
             if (check != null) return check;
 
-            _context.NhanVien.Update(model);
+            if (!ModelState.IsValid)
+            {
+                ViewBag.PhanQuyen = _context.PhanQuyen.ToList();
+                return View(model);
+            }
+
+            var nv = _context.NhanVien.Find(model.MaNV);
+
+            if (nv == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            nv.TenNV = model.TenNV;
+            nv.Email = model.Email;
+            nv.SoDienThoai = model.SoDienThoai;
+            nv.Username = model.Username;
+            nv.Password = model.Password;
+            nv.MaQuyen = model.MaQuyen;
+            nv.TrangThai = model.TrangThai;
+
             _context.SaveChanges();
 
             return RedirectToAction("Index");

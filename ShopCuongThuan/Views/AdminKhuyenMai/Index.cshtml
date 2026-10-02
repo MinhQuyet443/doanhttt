@@ -42,21 +42,31 @@
                         @item.NgayKetThuc?.ToString("dd/MM/yyyy")
                     </td>
                     <td>
-                        @if (item.TrangThai)
+                        @{
+                            var trangThai = item.TrangThaiHienThi;
+                        }
+
+                        @if (trangThai == "Đang diễn ra")
                         {
-                            <span class="status">Đang áp dụng</span>
+                            <span class="badge bg-success">Đang diễn ra</span>
+                        }
+                        else if (trangThai == "Sắp diễn ra")
+                        {
+                            <span class="badge bg-warning text-dark">Sắp diễn ra</span>
                         }
                         else
                         {
-                            <span class="status">Tạm dừng</span>
+                            <span class="badge bg-secondary">Tạm dừng</span>
                         }
                     </td>
                     <td>
                         <a href="/AdminKhuyenMai/Edit/@item.MaKM" class="btn-edit">Sửa</a>
 
-                        <form method="post" action="/AdminKhuyenMai/Delete" style="display:inline">
+                        <form asp-action="Delete"
+                              method="post"
+                              onsubmit="return confirm('Bạn có chắc chắn muốn xóa khuyến mãi này không?');">
                             <input type="hidden" name="id" value="@item.MaKM" />
-                            <button type="submit" class="btn-delete">Xóa</button>
+                            <button type="submit" class="btn btn-danger">Xóa</button>
                         </form>
                     </td>
                 </tr>

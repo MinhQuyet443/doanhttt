@@ -18,10 +18,17 @@
         <input type="email" name="Email" value="@Model.Email" />
 
         <label>Số điện thoại</label>
-        <input type="text" name="SoDienThoai" value="@Model.SoDienThoai" />
+        <input type="tel"
+               name="SoDienThoai"
+               value="@Model.SoDienThoai"
+               pattern="0[0-9]{9}"
+               maxlength="10"
+               title="Số điện thoại phải có 10 chữ số và bắt đầu bằng 0" />
 
-        <label>Tên đăng nhập</label>
-        <input type="text" name="Username" value="@Model.Username" required />
+        <span asp-validation-for="SoDienThoai"
+              class="text-danger"></span>
+
+        
 
         <label>Mật khẩu</label>
         <input type="text" name="Password" value="@Model.Password" required />

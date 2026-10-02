@@ -9,13 +9,25 @@
 
             <form method="post" action="/Order/PlaceOrder" id="checkoutForm">
                 <label>Họ tên người nhận</label>
-                <input type="text" name="hoTenNhan" placeholder="Nhập họ tên người nhận" required />
+                <input type="text"
+                       name="hoTenNhan"
+                       value="@ViewBag.HoTenNhan"
+                       placeholder="Nhập họ tên người nhận"
+                       required />
 
                 <label>Số điện thoại</label>
-                <input type="text" name="soDienThoai" placeholder="Nhập số điện thoại nhận hàng" required />
+                <input type="text"
+                       name="soDienThoai"
+                       value="@ViewBag.SoDienThoai"
+                       placeholder="Nhập số điện thoại nhận hàng"
+                       required />
 
                 <label>Địa chỉ nhận hàng</label>
-                <input type="text" name="diaChi" placeholder="Nhập lại địa chỉ giao hàng" required />
+                <input type="text"
+                       name="diaChi"
+                       value="@ViewBag.DiaChi"
+                       placeholder="Nhập địa chỉ giao hàng"
+                       required />
 
                 <label>Phương thức thanh toán</label>
                 <select name="phuongThucThanhToan" id="phuongThucThanhToan" required>
@@ -32,7 +44,7 @@
 
                         <div class="qr-info">
                             <p><strong>Ngân hàng:</strong> MB Bank</p>
-                            <p><strong>Chủ tài khoản:</strong> CƯỜNG THUẬN SHOP</p>
+                            <p><strong>Chủ tài khoản:</strong> F4 SHOP</p>
                             <p><strong>Nội dung:</strong> Thanh toán đơn hàng</p>
                             <p class="qr-note">
                                 Sau khi chuyển khoản xong, vui lòng bấm nút

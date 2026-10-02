@@ -43,9 +43,17 @@
                     <td>
                         <a href="/AdminSanPham/Edit/@item.MaSP" class="btn-edit">Sửa</a>
 
-                        <form method="post" action="/AdminSanPham/Delete" style="display:inline">
+                        <form asp-controller="AdminSanPham"
+                              asp-action="Delete"
+                              method="post"
+                              style="display:inline"
+                              onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm @item.TenSP không?');">
+
                             <input type="hidden" name="id" value="@item.MaSP" />
-                            <button type="submit" class="btn-delete">Xóa</button>
+
+                            <button type="submit" class="btn btn-danger">
+                                Xóa
+                            </button>
                         </form>
                     </td>
                 </tr>

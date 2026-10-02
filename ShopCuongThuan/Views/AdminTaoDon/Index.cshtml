@@ -44,10 +44,26 @@
                 </select>
             </div>
         </div>
+        <div class="form-actions" style="margin: 15px 0;">
+            <button type="submit" class="save-btn">
+                Tạo đơn
+            </button>
+
+            <a href="/Admin" class="cancel-btn">
+                Quay lại
+            </a>
+        </div>
 
         <h3>Chọn sản phẩm</h3>
 
-        <table class="admin-table">
+        <div style="margin: 15px 0;">
+            <input type="text"
+                   id="timKiemSanPham"
+                   placeholder="Tìm theo tên hoặc mã sản phẩm..."
+                   style="width: 100%; max-width: 400px; padding: 10px;" />
+        </div>
+
+        <table class="admin-table" id="bangSanPham">
             <thead>
                 <tr>
                     <th>Chọn</th>
@@ -63,7 +79,9 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr class="dong-san-pham"
+                        data-ten="@item.TenSP.ToLower()"
+                        data-ma="@item.MaSP">
                         <td>
                             <input type="checkbox" name="selectedProducts" value="@item.MaSP" />
                         </td>
@@ -92,10 +110,26 @@
             </tbody>
         </table>
 
-        <div class="form-actions">
-            <button type="submit" class="save-btn">Tạo đơn</button>
-            <a href="/Admin" class="cancel-btn">Quay lại</a>
-        </div>
+       
 
     </form>
 </div>
+<script>
+    const timKiem = document.getElementById("timKiemSanPham");
+    const cacDong = document.querySelectorAll(".dong-san-pham");
+
+    timKiem.addEventListener("input", function () {
+        const tuKhoa = timKiem.value.trim().toLowerCase();
+
+        cacDong.forEach(function (dong) {
+            const ten = dong.dataset.ten;
+            const ma = dong.dataset.ma;
+
+            if (ten.includes(tuKhoa) || ma.includes(tuKhoa)) {
+                dong.style.display = "";
+            } else {
+                dong.style.display = "none";
+            }
+        });
+    });
+</script>

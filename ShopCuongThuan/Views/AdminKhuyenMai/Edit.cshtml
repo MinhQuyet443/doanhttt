@@ -43,14 +43,23 @@
             }
         </select>
 
-        <label>Giá trị giảm</label>
-        <input type="number" name="GiaTriGiam" value="@Model.GiaTriGiam" required />
+        <input type="number" name="GiaTriGiam"
+               value="@Model.GiaTriGiam"
+               min="0" step="any" required />
 
         <label>Ngày bắt đầu</label>
-        <input type="date" name="NgayBatDau" value="@Model.NgayBatDau?.ToString("yyyy-MM-dd")" />
+        <input type="date" id="NgayBatDau"
+               name="NgayBatDau"
+               value="@Model.NgayBatDau?.ToString("yyyy-MM-dd")"
+               min="@DateTime.Today.ToString("yyyy-MM-dd")"
+               required />
 
         <label>Ngày kết thúc</label>
-        <input type="date" name="NgayKetThuc" value="@Model.NgayKetThuc?.ToString("yyyy-MM-dd")" />
+        <input type="date" id="NgayKetThuc"
+               name="NgayKetThuc"
+               value="@Model.NgayKetThuc?.ToString("yyyy-MM-dd")"
+               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")"
+               required />
 
         <label>Trạng thái</label>
         <select name="TrangThai">

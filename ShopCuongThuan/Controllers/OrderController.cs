@@ -50,7 +50,7 @@ namespace ShopCuongThuan.Controllers
             return gia;
         }
 
-        // Trang thanh toán
+
         public IActionResult Checkout()
         {
             var maKH = GetMaKH();
@@ -60,6 +60,22 @@ namespace ShopCuongThuan.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
+          
+            var khachHang = _context.KhachHang
+                .FirstOrDefault(kh => kh.MaKH == maKH.Value);
+
+            if (khachHang == null)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Login", "Account");
+            }
+
+   
+            ViewBag.HoTenNhan = khachHang.HoTen;
+            ViewBag.SoDienThoai = khachHang.SoDienThoai;
+            ViewBag.DiaChi = khachHang.DiaChi;
+
+         
             var cartItems = _context.GioHang
                 .Include(gh => gh.SanPham)
                     .ThenInclude(sp => sp!.KhuyenMais)
@@ -90,7 +106,7 @@ namespace ShopCuongThuan.Controllers
             return View(model);
         }
 
-        // Xử lý đặt hàng
+   
         [HttpPost]
         public IActionResult PlaceOrder(
             string hoTenNhan,
@@ -180,7 +196,7 @@ namespace ShopCuongThuan.Controllers
             return RedirectToAction("Success", new { id = donHang.MaDH });
         }
 
-        // Trang đặt hàng thành công
+    
         public IActionResult Success(int id)
         {
             var maKH = GetMaKH();
@@ -201,7 +217,7 @@ namespace ShopCuongThuan.Controllers
             return View(donHang);
         }
 
-        // Danh sách đơn hàng của khách hàng đang đăng nhập
+       
         public IActionResult MyOrders()
         {
             var maKH = GetMaKH();
@@ -219,7 +235,6 @@ namespace ShopCuongThuan.Controllers
             return View(donHangs);
         }
 
-        // Chi tiết từng đơn hàng
         public IActionResult Details(int id)
         {
             var maKH = GetMaKH();
@@ -242,7 +257,6 @@ namespace ShopCuongThuan.Controllers
             return View(donHang);
         }
 
-        // Nếu còn link cũ /Order/Lookup thì tự chuyển sang danh sách đơn hàng
         public IActionResult Lookup()
         {
             return RedirectToAction("MyOrders");

@@ -11,7 +11,10 @@ namespace ShopCuongThuan.Models
 
         public string Email { get; set; } = "";
 
-        public string? SoDienThoai { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
+        [RegularExpression(@"^0\d{9}$",
+    ErrorMessage = "Số điện thoại phải có 10 chữ số và bắt đầu bằng 0")]
+        public string SoDienThoai { get; set; } = "";
 
         public string? DiaChi { get; set; }
 

@@ -28,7 +28,8 @@
         <input type="text" name="Hang" />
 
         <label>Giá bán</label>
-        <input type="number" name="GiaBan" required />
+        <input type="number" name="GiaBan"
+               min="0" step="any" required />
 
         <label>Mô tả</label>
         <textarea name="MoTa" rows="4"></textarea>
@@ -37,7 +38,8 @@
         <input type="file" name="UploadImage" accept="image/*" />
 
         <label>Số lượng tồn</label>
-        <input type="number" name="SoLuongTon" value="0" />
+        <input type="number" name="SoLuongTon"
+               min="0" step="1" required />
 
         <div class="form-actions">
             <button type="submit" class="save-btn">Lưu</button>

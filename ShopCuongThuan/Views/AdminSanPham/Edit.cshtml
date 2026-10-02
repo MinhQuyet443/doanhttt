@@ -37,7 +37,9 @@
         <input type="text" name="Hang" value="@Model.Hang" />
 
         <label>Giá bán</label>
-        <input type="number" name="GiaBan" value="@Model.GiaBan" required />
+        <input type="number" name="GiaBan"
+               value="@Model.GiaBan"
+               min="0" step="any" required />
 
         <label>Mô tả</label>
         <textarea name="MoTa" rows="4">@Model.MoTa</textarea>
@@ -60,7 +62,9 @@
         <input type="file" name="UploadImage" accept="image/*" />
 
         <label>Số lượng tồn</label>
-        <input type="number" name="SoLuongTon" value="@Model.SoLuongTon" />
+        <input type="number" name="SoLuongTon"
+               value="@Model.SoLuongTon"
+               min="0" step="1" required />
 
         <div class="form-actions">
             <button type="submit" class="save-btn">Lưu thay đổi</button>

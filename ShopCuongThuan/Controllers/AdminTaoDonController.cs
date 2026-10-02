@@ -37,6 +37,20 @@ namespace ShopCuongThuan.Controllers
         {
             var check = CheckAdminLogin();
             if (check != null) return check;
+            // Kiểm tra số điện thoại nếu khách có nhập
+            if (!string.IsNullOrWhiteSpace(soDienThoai))
+            {
+                soDienThoai = soDienThoai.Trim();
+
+                if (!System.Text.RegularExpressions.Regex.IsMatch(
+                    soDienThoai, @"^0\d{9}$"))
+                {
+                    TempData["Error"] =
+                        "Số điện thoại không hợp lệ.";
+
+                    return RedirectToAction("Index");
+                }
+            }
 
             if (selectedProducts == null || selectedProducts.Count == 0)
             {

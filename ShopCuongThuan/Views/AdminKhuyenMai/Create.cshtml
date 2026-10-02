@@ -25,13 +25,20 @@
         </select>
 
         <label>Giá trị giảm</label>
-        <input type="number" name="GiaTriGiam" required />
+        <input type="number" name="GiaTriGiam"
+               min="0" step="any" required />
 
         <label>Ngày bắt đầu</label>
-        <input type="date" name="NgayBatDau" />
+        <input type="date" id="NgayBatDau"
+               name="NgayBatDau"
+               min="@DateTime.Today.ToString("yyyy-MM-dd")"
+               required />
 
         <label>Ngày kết thúc</label>
-        <input type="date" name="NgayKetThuc" />
+        <input type="date" id="NgayKetThuc"
+               name="NgayKetThuc"
+               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")"
+               required />
 
         <label>Trạng thái</label>
         <select name="TrangThai">
@@ -45,3 +52,29 @@
         </div>
     </form>
 </div>
+<script>
+    const ngayBatDau = document.getElementById("NgayBatDau");
+    const ngayKetThuc = document.getElementById("NgayKetThuc");
+
+    ngayBatDau.addEventListener("change", function () {
+        if (ngayBatDau.value) {
+            const ngaySauBatDau = new Date(
+                ngayBatDau.value + "T00:00:00"
+            );
+
+            ngaySauBatDau.setDate(ngaySauBatDau.getDate() + 1);
+
+            const minNgayKetThuc =
+                ngaySauBatDau.getFullYear() + "-" +
+                String(ngaySauBatDau.getMonth() + 1).padStart(2, "0") + "-" +
+                String(ngaySauBatDau.getDate()).padStart(2, "0");
+
+            ngayKetThuc.min = minNgayKetThuc;
+
+            if (ngayKetThuc.value &&
+                ngayKetThuc.value < minNgayKetThuc) {
+                ngayKetThuc.value = "";
+            }
+        }
+    });
+</script>

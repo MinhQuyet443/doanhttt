@@ -7,8 +7,7 @@
 <div class="admin-card">
     <h2>Tạo phiếu nhập hàng</h2>
     <p class="admin-muted">
-        Chọn sản phẩm cần nhập, nhập số lượng và đơn giá nhập.
-        Hệ thống sẽ tự cộng số lượng nhập vào số lượng tồn hiện tại.
+        
     </p>
 
     @if (TempData["Error"] != null)
@@ -23,7 +22,7 @@
                 <label>Mã phiếu nhập</label>
                 <input type="text"
                        name="maPhieuNhap"
-                       placeholder="Ví dụ: PN001"
+                       placeholder=""
                        required />
             </div>
 
@@ -31,7 +30,7 @@
                 <label>Ghi chú</label>
                 <input type="text"
                        name="ghiChu"
-                       placeholder="Ví dụ: Nhập hàng từ nhà cung cấp" />
+                       placeholder="" />
             </div>
         </div>
 
@@ -47,7 +46,7 @@
                     <th>Giá bán</th>
                     <th>Tồn cũ</th>
                     <th>Số lượng nhập</th>
-                    <th>Đơn giá nhập</th>
+                   
                 </tr>
             </thead>
 
